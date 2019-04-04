@@ -1,25 +1,29 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+     <keep-alive  v-if="$route.meta.keepAlive">
+       <navTab></navTab>
+     </keep-alive>
     <router-view/>
   </div>
 </template>
+
+<script>
+import navTab from './components/fixation/navTab';
+export default {
+  components: { navTab }
+}
+</script>
+
 <style lang="stylus">
 #app
   font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
+  width 100vw
+  height 100vh
+*
+  margin 0
+  padding 0
+</style>
 
-#nav
-  padding 30px
-  a
-    font-weight bold
-    color #2c3e50
-    &.router-link-exact-active
-      color #42b983
+<style lang="less">
+@import '~vux/src/styles/reset.less';
 </style>
