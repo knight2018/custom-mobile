@@ -27,7 +27,7 @@ import XHeader from 'vux/src/components/x-header'
 import Popup from 'vux/src/components/popup'
 import Cell from 'vux/src/components/cell'
 import Group from 'vux/src/components/group'
-import routers from '@/router/router'
+//import routers from '@/router/router'
 import CellBox from 'vux/src/components/cell-box'
 import { getMenuByRouter } from '@/libs/util'
 import {GetGameName} from '@/libs/util.js'
@@ -53,9 +53,10 @@ export default {
             this.off = false;
         },
         handleNavClick1 (title){
-            console.log(title)
             this.off = false;
-            this.$router.push(title.path)
+            this.$router.push({
+                name: title.name
+            })
         },
     },
     computed : {
@@ -65,7 +66,7 @@ export default {
     },
     watch :{
         'gameName' (newVal){
-            this.menuList = getMenuByRouter(routers);
+            this.menuList = getMenuByRouter(this.$router.options.routes);
         },
     },
     mounted (){

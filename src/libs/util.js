@@ -34,7 +34,6 @@ export const setToken = (token) => {
     let arrList = []
     if (localStorage.menuPermission !== "01") {
       let menuPermission = JSON.parse(localStorage.menuPermission)
-      console.log(menuPermission)
       let game = GetGameId()
       if (menuPermission[game].menuPermission.length) {
         menuPermission[game].menuPermission.forEach(item => {
