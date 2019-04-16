@@ -1,6 +1,6 @@
 import axios from 'axios'
 import config from '@/config'
-import router from '@/router/router'
+import router from '@/router/index'
 import { getToken, setToken, setGameId } from '@/libs/util'
 
 const baseURL = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro;
@@ -24,7 +24,7 @@ axios.interceptors.request.use(function (config) {
       setGameId('')
       localStorage.setItem("menuPermission","")
       router.replace({
-        path: 'login'
+        path: '/login'
       })
     }
     return res;

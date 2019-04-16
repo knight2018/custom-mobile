@@ -23,6 +23,6 @@ module.exports = {
   },
   productionSourceMap: false,
   devServer: {
-    proxy: 'http://192.168.1.194:7001/custom' // 本地
+    proxy: 'http://fish-test.zhonglehd.cn/custom' // 本地
   }
 }

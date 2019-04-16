@@ -11,7 +11,6 @@
 import {Select,SelectAdd} from "@/api/data.js"
 import {setGameName,setGameId} from '@/libs/util.js'
 export default {
-    name: 'selectList',
     data (){
         return {
              list: [],
@@ -26,66 +25,9 @@ export default {
             setGameId(item.gameId)
             localStorage.gamePhone = item.principalPhone;
             this.$router.push({
-                path: '/home'
+                name: 'home'
             })
         },
-        handleAdd (){
-            if(this.val1){
-                if(this.val2){
-                    let gameName = this.val1,
-                    gameId = this.val2,
-                    principalPhone = this.val3;
-                    let off = true;
-                     let regex = /^1[34578]\d{9}$/,
-                         retx;
-                    if(principalPhone===""){
-                        off = true
-                    }else if(principalPhone.indexOf(',')<0){
-                        retx = regex.test(principalPhone);
-                        if(!retx){
-                            off = false;
-                            this.$Notice.warning({
-                                title: '号码有误，多个号码隔开逗号必须为小写'
-                            })
-                        }
-                    }else{
-                        let arr = principalPhone.split(',');
-                        arr.forEach((ele,index) => {
-                            if(!regex.test(ele)){
-                                off = false;
-                                this.$Notice.warning({
-                                title: `第${index+1}个手机号输入有误`
-                            })
-                            }
-                        });
-                    }
-                    if(off){
-                        SelectAdd({gameId,gameName,principalPhone}).then((res) => {
-                            this.$Notice.open({
-                                title: res.data.message
-                            })
-                            Select().then((res) => {
-                                this.list = res.data.data
-                            }).catch((err) => {
-                                
-                            });
-                        }).catch((err) => {
-                            
-                        });
-                    }
-                    
-                }else{
-                    this.$Notice.warning({
-                        title: '游戏ID不能为空'
-                    })
-                }
-            }else{
-                this.$Notice.warning({
-                        title: '游戏名称不能为空'
-                    })
-            }
-            
-        }
     },
      created (){
         setGameId('');
@@ -110,6 +52,10 @@ export default {
                 }).catch((err) => {
                 });
             }
+        }else{
+            this.$router.push({
+                path: '/login'
+            })
         }
     }
   }

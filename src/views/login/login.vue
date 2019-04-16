@@ -14,17 +14,23 @@
                 <a href="#" @click="handleLogins">立即登陆</a>
             </div>
         </div>
+        <alert v-model="off" title="错误" :content="content+'不允许为空'"></alert>
     </div>
 </template>
 
 <script>
+import Alert from 'vux/src/components/alert'
 import { mapActions } from 'vuex'
+import { setTimeout } from 'timers';
 export default {
     name: 'login',
+    components: {Alert},
     data (){
         return {
             userName: '',
-            password: ''
+            password: '',
+            off: false,
+            content: '账号'
         }
     },
     methods: {
@@ -34,11 +40,24 @@ export default {
         handleLogins (){
             let userName = this.userName,
                 password = this.password;
-            this.handleLogin({ userName, password }).then(res => {
-                 this.$router.push({
-                    name: 'selectList'
-                })
-            })
+            if(userName.trim()){
+                if(password.trim()){
+                    this.handleLogin({ userName, password }).then(res => {
+                        this.$router.push({
+                            name: 'select'
+                        })
+                    })
+                }else{
+                    this.off = true;
+                    this.content = "密码";
+                    setTimeout(()=>{this.off=false},2000)
+                }
+            }else{
+                this.off = true;
+                this.content = "账号";
+                setTimeout(()=>{this.off=false},2000)
+            }
+            
         },
         
     },

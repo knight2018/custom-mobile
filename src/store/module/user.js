@@ -35,7 +35,6 @@ export default {
                 userPwd
               }).then(res => {
                 if (res.data.resultCode === '200') {
-                  console.log(res)
                   const data = res.data.Data
                   commit('setToken', data.token)
                   commit('setUserName', data.userName)

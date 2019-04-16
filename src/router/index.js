@@ -10,8 +10,13 @@ const router = new Router({
   mode: 'hash'
 })
 
+const getTitle = (title) =>{
+  store.commit('setTitle', title)
+}
+
 const LOGIN_PAGE_NAME = 'login'
 router.beforeEach((to, from, next) => {
+    getTitle(to.meta.title);
     const token = getToken()
     const id = GetGameId()
     if (!token && to.name !== LOGIN_PAGE_NAME) {

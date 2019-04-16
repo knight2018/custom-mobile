@@ -1,19 +1,23 @@
 <template>
     <div>
-        <XHeader title="test"><a slot="right" @click="handleNav"><x-icon type="more"></x-icon></a></XHeader>
+        <XHeader :title="title"><a slot="right" @click="handleNav"><x-icon type="more"></x-icon></a></XHeader>
         <div>
         <popup v-model="off" position="left" width="60%" :popup-style="{background:'#001529'}">
             <div class="nav">
-                <p class="nav-title">{{gameName ? gameName : '游戏'}}游戏</p>
-                 <cell-box :border-intent="false" class="sub-item" is-link link="/selectList"  @click.native="handleNavClick" style="background:#001529; color:#fff; border:none; marginTop:20px;">游戏选择</cell-box>
-                <group v-for="(item,index) in menuList" :key="index">
-                    <cell  :title="item.meta.title" is-link :arrow-direction="item.meta.navOff?'up':'down'" @click.native="handleNavOff(item.meta)" style="background: #001529; color:#fff; border:none"></cell>
+                <p class="nav-title">{{gameName ? gameName : '游戏'}}</p>
+                 <cell-box :border-intent="false" class="sub-item" is-link link="/select"  @click.native="handleNavClick" style="background:#001529; color:#fff; border:none; marginTop:20px;">游戏选择</cell-box>
+                <div v-for="(item,index) in menuList" :key="index">
+                    <a  v-for="(items,index) in item.children" :key="index" class="sub-item" @click="handleNavClick1(items)">{{items.meta.title}}</a>
+                </div>
+                <!-- <group >
+                    <cell :border-intent="false" :title="item.meta.title" is-link :arrow-direction="!item.meta.navOff?'up':'down'" @click.native="handleNavOff(item.meta)" style="background: #001529; color:#fff; border:none"></cell>
                      <template v-if="item.meta.navOff">
-                        <cell-box v-for="(items,index) in item.children" :key="index" :border-intent="false" class="sub-item" is-link :link="items.name" style="background: #000c17; color:#fff; border:none">{{items.meta.title}}</cell-box>
-                    </template>
-                </group>
+                    </template> -->
+                <!-- </group> -->
+                <router-link to="combination/combinationList">点击测试</router-link>
             </div>
         </popup>
+        <router-view></router-view>
         </div>
     </div>
 </template>
@@ -47,6 +51,16 @@ export default {
         },
         handleNavClick (){
             this.off = false;
+        },
+        handleNavClick1 (title){
+            console.log(title)
+            this.off = false;
+            this.$router.push(title.path)
+        },
+    },
+    computed : {
+        title (){
+            return this.$store.getters.getTitle;
         }
     },
     watch :{
@@ -63,7 +77,7 @@ export default {
 <style lang="stylus" scoped>
     .nav
          position absolute
-         z-index 502
+         z-index 1
          width 100%
          height 100%
          backgroud-color #fff

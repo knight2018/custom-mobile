@@ -22,7 +22,6 @@ export const setToken = (token) => {
   }
   export const getToken = () => {
     const token = Cookies.get(TOKEN_KEY)
-    console.log(Cookies.get(TOKEN_KEY))
     if (token) return token
     else return false
   }
@@ -33,9 +32,9 @@ export const setToken = (token) => {
 
   export const getMenuByRouter = (list) => {
     let arrList = []
-    console.log(localStorage.menuPermission)
     if (localStorage.menuPermission !== "01") {
       let menuPermission = JSON.parse(localStorage.menuPermission)
+      console.log(menuPermission)
       let game = GetGameId()
       if (menuPermission[game].menuPermission.length) {
         menuPermission[game].menuPermission.forEach(item => {
@@ -67,11 +66,11 @@ export const setToken = (token) => {
         }
         
         if (!item.meta.key) {
-
           let obj = {
             icon: (item.meta && item.meta.icon) || '',
             name: item.name,
-            meta: item.meta
+            meta: item.meta,
+            path: item.path
           }
           if ((hasChild(item) || (item.meta && item.meta.showAlways))) {
             obj.children = getMenuByRouter(item.children)
@@ -81,5 +80,6 @@ export const setToken = (token) => {
         }
       }
     })
+    console.log(res)
     return res
   }
